@@ -5,10 +5,7 @@ import android.os.Bundle
 import android.util.Log
 import android.widget.Button
 import android.widget.TextView
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.delay
-import kotlinx.coroutines.launch
+import kotlinx.coroutines.*
 
 class MainActivity : AppCompatActivity() {
     private var count = 0
@@ -34,7 +31,9 @@ class MainActivity : AppCompatActivity() {
     private suspend fun downloadUserData() {
         for (i in 1..200000) {
             Log.i("MyTag", "Downloading user $i in ${Thread.currentThread().name}")
-            //messageTextView.text = "Downloading user $i"
+            withContext(Dispatchers.Main){
+                messageTextView.text = "Downloading user $i"
+            }
             delay(100)
         }
     }
